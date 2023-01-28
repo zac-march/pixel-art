@@ -1,4 +1,13 @@
 #canvas div {
+    display: flex;
+}
+
+.row {
+
+}
+
+
+.pixel {
     background-color: blue;
     height: 20px;
     width: 20px;
