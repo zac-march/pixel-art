@@ -1,0 +1,10 @@
+#canvas div {
+    background-color: blue;
+    height: 20px;
+    width: 20px;
+    outline: 1px solid black;
+}
+
+body {
+    background-color: burlywood;
+}
