@@ -1,25 +1,45 @@
-let canvasDiv = document.querySelector('#canvas');
-let isMouseDown = false
+const canvasDiv = document.querySelector('#canvas');
+const canvasSizeBtns = document.querySelectorAll('.canvas-size-button');
+let canvasSize = 16;
+const CANVAS_SIZE_VALUE = 8;
+const CANVAS_SIZE_MAX = 64;
+const CANVAS_SIZE_MIN = 8;
 
-
-let dimensions = 50
-let pixelSize = canvasDiv.offsetWidth / dimensions
-canvasDiv.style.gridTemplateColumns = `repeat(${dimensions}, 1fr)`
-for (i = 0; i < dimensions * dimensions; i++){
-    let pixel = document.createElement("div")
-    pixel.className = "pixel"
-    //pixel.addEventListener('mousedown', function(e){ clickPixel(e) });
-    canvasDiv.appendChild(pixel)
-}
-canvasDiv.addEventListener('mousedown', function(e){ console.log(e); isMouseDown = true; });
+canvasDiv.addEventListener('mousedown', function(e){ clickPixel(e); isMouseDown = true; });
 canvasDiv.addEventListener('mouseup', function(){ isMouseDown = false;})
 canvasDiv.addEventListener('mouseover', function(e){ 
-    if (isMouseDown){
-        clickPixel(e)
-    }
-
+    isMouseDown ? clickPixel(e) : false;
 })
 
+
+canvasSizeBtns.forEach((button) => {
+    button.addEventListener('click', (e) => {
+        let btnText = e.target.textContent;
+        if (btnText == 'Smaller' && canvasSize != CANVAS_SIZE_MIN) {
+            canvasSize -= CANVAS_SIZE_VALUE
+            loadCanvas(canvasSize)
+        }
+        if (btnText == 'Larger' && canvasSize != CANVAS_SIZE_MAX) {
+            canvasSize += CANVAS_SIZE_VALUE
+            loadCanvas(canvasSize)
+        }
+    });
+});
+
+
+let isMouseDown = false
+
+loadCanvas(canvasSize);
+
+function loadCanvas(dimensions) {
+    canvasDiv.innerHTML = ''
+    canvasDiv.style.gridTemplateColumns = `repeat(${dimensions}, 1fr)`;
+    for (i = 0; i < dimensions * dimensions; i++) {
+        let pixel = document.createElement("div");
+        pixel.className = "pixel";
+        canvasDiv.appendChild(pixel);
+    }
+}
 
 function clickPixel(e){
     if (e.target.id != 'canvas'){
