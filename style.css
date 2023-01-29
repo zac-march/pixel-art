@@ -4,6 +4,11 @@ body {
     flex-direction: column;
     margin: 0;
     min-height: 100vh;
+    background-color:  #ededed;
+}
+
+h1 {
+    font-size: 56px;
 }
 
 .header, .footer {
@@ -25,17 +30,36 @@ body {
     height: 600px;
     grid-auto-rows: 1fr;
     pointer-events: none;
-    
+    outline: .5px solid rgb(129, 129, 129);
+}
+
+#colour-options {
+    display: grid;
+    width: 100%;
+    height: 100px;
+    grid-auto-rows: 1fr;
+    pointer-events: none;
+    outline: .5px solid rgb(129, 129, 129);
+
 }
 
 .pixel {
-    outline: .2px solid rgb(231, 231, 231);
+    
     pointer-events: auto;
     user-select: none;
 }
 
 .options {
     padding: 50px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.option {
+    display: flex;
+    gap: 10px
 }
 
 .footer{
