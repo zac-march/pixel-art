@@ -8,26 +8,26 @@ body {
 
 .header, .footer {
   flex-shrink: 0;
+  display: flex;
+  justify-content: center;
 }
 
 .main {
   flex-grow: 1;
+  display: flex;
+  justify-content: center;
 }
 
 
 #canvas {
-    max-width: 600px;
+    display: grid;
+    width: 600px;
+    height: 600px;
+    grid-auto-rows: 1fr;
 }
-
-.row {
-    display: flex;
-
-}
-
 
 .pixel {
-    background-color: blue;
-    outline: 1px solid black;
+    outline: .2px solid rgb(231, 231, 231);
 }
 
 .footer{
