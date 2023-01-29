@@ -34,6 +34,10 @@ body {
     user-select: none;
 }
 
+.options {
+    padding: 50px;
+}
+
 .footer{
     padding: 25px;
 }
