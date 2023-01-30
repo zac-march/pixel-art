@@ -8,7 +8,20 @@ const CANVAS_SIZE_VALUE = 8;
 const CANVAS_SIZE_MAX = 64;
 const CANVAS_SIZE_MIN = 8;
 
-canvasDiv.addEventListener('mousedown', function(e){ clickPixel(e); isMouseDown = true; });
+
+let selectedColour = COLOUR_OPTIONS[0];
+
+canvasDiv.addEventListener('mousedown', function(e){ 
+    if (e.target.className == 'pixel'){
+        clickPixel(e); 
+        isMouseDown = true; 
+    }
+    // else if (e.target.className == 'colour-option') {
+    //     console.log('hit')
+
+    // }
+    console.log(e)
+});
 canvasDiv.addEventListener('mouseup', function(){ isMouseDown = false;})
 canvasDiv.addEventListener('mouseover', function(e){ isMouseDown ? clickPixel(e) : false;})
 
@@ -33,6 +46,8 @@ let isMouseDown = false
 loadCanvas(canvasSize);
 loadColourOptions();
 
+const colourOptions =  document.querySelectorAll('.colour-option');
+
 function loadCanvas(dimensions) {
     canvasSizeLabel.textContent = `${dimensions}x${dimensions}`
     canvasDiv.innerHTML = ''
@@ -50,15 +65,17 @@ function loadColourOptions() {
     for (i = 0; i < numberOfColours; i++) {
         let colourOption = document.createElement("div");
         colourOption.style.backgroundColor = COLOUR_OPTIONS[i]
-        console.log(colourOption)
+        colourOption.className = "colour-option"
         colourOptionDiv.appendChild(colourOption);
+        colourOption.addEventListener('click', (e) =>{
+            selectedColour = COLOUR_OPTIONS[COLOUR_OPTIONS.indexOf(e.target.style.backgroundColor)]
+            console
+        })
     }
 }
 
 function clickPixel(e){
     if (e.target.id != 'canvas'){
-        e.target.style.backgroundColor = "red"
+        e.target.style.backgroundColor = selectedColour;
     }
-
-    
 }
