@@ -2,19 +2,16 @@ const canvasDiv = document.querySelector('#canvas');
 const canvasSizeBtns = document.querySelectorAll('.canvas-size-button');
 const canvasSizeLabel = document.querySelector('#canvas-size-label');
 const colourOptionDiv = document.querySelector('#colour-options');
+
 const COLOUR_OPTIONS = ["black", "red", "orange", "yellow", "green", "blue", "white", "indigo", "violet", "pink", "purple", "brown"];
-
-
-
-
-
-
-let canvasSize = 16;
 const CANVAS_SIZE_VALUE = 8;
 const CANVAS_SIZE_MAX = 64;
 const CANVAS_SIZE_MIN = 8;
+const CANVAS_SIZE_DEFAULT = 16;
 
-
+let colourOptions 
+let canvasSize = CANVAS_SIZE_DEFAULT;
+let isMouseDown = false;
 let selectedColour = COLOUR_OPTIONS[0];
 
 canvasDiv.addEventListener('mousedown', function(e){ 
@@ -27,12 +24,10 @@ canvasDiv.addEventListener('mouseup', function(){ isMouseDown = false;})
 canvasDiv.addEventListener('mouseover', function(e){ isMouseDown ? clickPixel(e) : false;})
 
 colourOptionDiv.addEventListener('click', function(e){
-    if (e.target.className == "colour-option"){
-        e.target.style.border = '2px solid #DADADA'
-        console.log(selectedColour)
+    if (e.target.className == "colour-option" && e.target.style.backgroundColor != selectedColour){
+        e.target.style.border = '2px solid #c8d3cd'
         colourOptions[COLOUR_OPTIONS.indexOf(selectedColour)].style.border = ''
         selectedColour = e.target.style.backgroundColor
-        
     }
 })
 
@@ -52,12 +47,11 @@ canvasSizeBtns.forEach((button) => {
     });
 });
 
+function main(){
+    loadCanvas(canvasSize);
+    loadColourOptions();
 
-let isMouseDown = false
-
-loadCanvas(canvasSize);
-loadColourOptions();
-const colourOptions =  document.querySelectorAll('.colour-option');
+}
 
 
 function loadCanvas(dimensions) {
@@ -80,9 +74,13 @@ function loadColourOptions() {
         colourOption.className = "colour-option"
         colourOptionDiv.appendChild(colourOption);
     }
+    colourOptions =  document.querySelectorAll('.colour-option');
+    colourOptions[COLOUR_OPTIONS.indexOf(selectedColour)].style.border = '2px solid #c8d3cd'
 }
 
 
 function clickPixel(e){
     e.target.style.backgroundColor = selectedColour;
 }
+
+main()
