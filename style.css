@@ -35,7 +35,6 @@ h1 {
 #canvas {
     width: 600px;
     height: 600px;
-    transition: all 0.5s;
 }
 
 #colour-options {
@@ -44,12 +43,14 @@ h1 {
 }
 
 .pixel:hover, .colour-option:hover {
+
     border: .3px solid rgba(221, 221, 221, .7);  
 }
 
 .pixel, .colour-option {
     pointer-events: auto;
     user-select: none;
+    border: 0px solid rgba(221, 221, 221, 0); 
     
 }
 
