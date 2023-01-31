@@ -3,6 +3,7 @@ const canvasSizeBtns = document.querySelectorAll('.canvas-size-button');
 const canvasSizeLabel = document.querySelector('#canvas-size-label');
 const colourOptionDiv = document.querySelector('#colour-options');
 const rainbowBtn = document.querySelector("#rainbow-button")
+const clearBtn = document.querySelector("#clear-button")
 
 const COLOUR_OPTIONS = ["black", "red", "orange", "yellow", "green", "blue", "white", "indigo", "violet", "pink", "purple", "brown"];
 const CANVAS_SIZE_VALUE = 8;
@@ -13,7 +14,7 @@ const CANVAS_SIZE_DEFAULT = 16;
 let colourOptions 
 let canvasSize = CANVAS_SIZE_DEFAULT;
 let isMouseDown = false;
-let isRainbowMode
+let isRainbowMode = false;
 let selectedColour = COLOUR_OPTIONS[0];
 
 canvasDiv.addEventListener('mousedown', function(e){ 
@@ -27,9 +28,8 @@ canvasDiv.addEventListener('mouseover', function(e){ isMouseDown ? clickPixel(e)
 
 colourOptionDiv.addEventListener('click', function(e){
     if (e.target.className == "colour-option" && e.target.style.backgroundColor != selectedColour){
-        e.target.style.border = '2px solid #c8d3cd'
-        colourOptions[COLOUR_OPTIONS.indexOf(selectedColour)].style.border = ''
-        selectedColour = e.target.style.backgroundColor
+        if (isRainbowMode){toggleRainbowMode()}
+        switchSelectedColor(e.target.style.backgroundColor)
     }
 })
 
@@ -39,31 +39,35 @@ canvasSizeBtns.forEach((button) => {
 
         if (btnText == '↓' && canvasSize != CANVAS_SIZE_MIN) {
             canvasSize -= CANVAS_SIZE_VALUE
-            loadCanvas(canvasSize)
+            loadCanvas()
         }
 
         else if (btnText == '↑' && canvasSize != CANVAS_SIZE_MAX) {
             canvasSize += CANVAS_SIZE_VALUE
-            loadCanvas(canvasSize)
+            loadCanvas()
         }
     });
 });
 
-rainbowBtn.addEventListener('click', function(e){
+rainbowBtn.addEventListener('click', toggleRainbowMode)
+clearBtn.addEventListener('click',  loadCanvas)
+
+function toggleRainbowMode(){
     isRainbowMode = !isRainbowMode
     const bgColor = isRainbowMode ? "#333" : "white"
     const color = isRainbowMode ? "white" : "#333"
-    e.target.style.backgroundColor = bgColor
-    e.target.style.color = color
-})
+    rainbowBtn.style.backgroundColor = bgColor
+    rainbowBtn.style.color = color
+}
 
 function main(){
-    loadCanvas(canvasSize);
+    loadCanvas();
     loadColourOptions();
 }
 
 
-function loadCanvas(dimensions) {
+function loadCanvas() {
+    let dimensions = canvasSize;
     canvasSizeLabel.textContent = `${dimensions}x${dimensions}`
     canvasDiv.innerHTML = ''
     canvasDiv.style.gridTemplateColumns = `repeat(${dimensions}, 1fr)`;
@@ -91,11 +95,16 @@ function loadColourOptions() {
 function clickPixel(e){
     if(isRainbowMode === true){
         colourIndex = Math.floor(Math.random() * COLOUR_OPTIONS.length)
-        colourOptions[COLOUR_OPTIONS.indexOf(selectedColour)].style.border = ''
-        selectedColour = COLOUR_OPTIONS[colourIndex]
-        colourOptions[COLOUR_OPTIONS.indexOf(selectedColour)].style.border = '2px solid #c8d3cd'
+        newColor = COLOUR_OPTIONS[colourIndex]
+        switchSelectedColor(newColor);
     }
     e.target.style.backgroundColor = selectedColour;
 }
 
 main()
+function switchSelectedColor(newColor) {
+    colourOptions[COLOUR_OPTIONS.indexOf(selectedColour)].style.border = '';
+    colourOptions[COLOUR_OPTIONS.indexOf(newColor)].style.border = '2px solid #c8d3cd';
+    selectedColour = newColor
+}
+
