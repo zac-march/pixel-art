@@ -35,12 +35,12 @@ canvasSizeBtns.forEach((button) => {
     button.addEventListener('click', (e) => {
         let btnText = e.target.textContent;
 
-        if (btnText == 'Smaller' && canvasSize != CANVAS_SIZE_MIN) {
+        if (btnText == '↓' && canvasSize != CANVAS_SIZE_MIN) {
             canvasSize -= CANVAS_SIZE_VALUE
             loadCanvas(canvasSize)
         }
 
-        else if (btnText == 'Larger' && canvasSize != CANVAS_SIZE_MAX) {
+        else if (btnText == '↑' && canvasSize != CANVAS_SIZE_MAX) {
             canvasSize += CANVAS_SIZE_VALUE
             loadCanvas(canvasSize)
         }
