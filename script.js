@@ -2,6 +2,7 @@ const canvasDiv = document.querySelector('#canvas');
 const canvasSizeBtns = document.querySelectorAll('.canvas-size-button');
 const canvasSizeLabel = document.querySelector('#canvas-size-label');
 const colourOptionDiv = document.querySelector('#colour-options');
+const rainbowBtn = document.querySelector("#rainbow-button")
 
 const COLOUR_OPTIONS = ["black", "red", "orange", "yellow", "green", "blue", "white", "indigo", "violet", "pink", "purple", "brown"];
 const CANVAS_SIZE_VALUE = 8;
@@ -12,6 +13,7 @@ const CANVAS_SIZE_DEFAULT = 16;
 let colourOptions 
 let canvasSize = CANVAS_SIZE_DEFAULT;
 let isMouseDown = false;
+let isRainbowMode
 let selectedColour = COLOUR_OPTIONS[0];
 
 canvasDiv.addEventListener('mousedown', function(e){ 
@@ -47,10 +49,17 @@ canvasSizeBtns.forEach((button) => {
     });
 });
 
+rainbowBtn.addEventListener('click', function(e){
+    isRainbowMode = !isRainbowMode
+    const bgColor = isRainbowMode ? "#333" : "white"
+    const color = isRainbowMode ? "white" : "#333"
+    e.target.style.backgroundColor = bgColor
+    e.target.style.color = color
+})
+
 function main(){
     loadCanvas(canvasSize);
     loadColourOptions();
-
 }
 
 
@@ -80,6 +89,12 @@ function loadColourOptions() {
 
 
 function clickPixel(e){
+    if(isRainbowMode === true){
+        colourIndex = Math.floor(Math.random() * COLOUR_OPTIONS.length)
+        colourOptions[COLOUR_OPTIONS.indexOf(selectedColour)].style.border = ''
+        selectedColour = COLOUR_OPTIONS[colourIndex]
+        colourOptions[COLOUR_OPTIONS.indexOf(selectedColour)].style.border = '2px solid #c8d3cd'
+    }
     e.target.style.backgroundColor = selectedColour;
 }
 
